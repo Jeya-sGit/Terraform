@@ -1,26 +1,64 @@
+#Public Route Table
 resource "aws_route_table" "VPCDemoTerraform-rtb-public" {
   vpc_id = aws_vpc.VPCDemoTerraform.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.VPCDemoTerraform-igw.id
+  }
 
   tags = {
     Name = "VPCDemoTerraform-rtb-public"
   }
   
 }
+resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-public1-ap-south-1a" {
+  subnet_id      = aws_subnet.VPCDemoTerraform-subnet-public1-ap-south-1a.id
+  route_table_id = aws_route_table.VPCDemoTerraform-rtb-public.id
+  
+}
+resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-public2-ap-south-1b" {
+  subnet_id      = aws_subnet.VPCDemoTerraform-subnet-public2-ap-south-1b.id
+  route_table_id = aws_route_table.VPCDemoTerraform-rtb-public.id
+  
+}
 
+#Private Route Table for ap-south-1a
 resource "aws_route_table" "VPCDemoTerraform-rtb-private1-ap-south-1a" {
   vpc_id = aws_vpc.VPCDemoTerraform.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.VPCDemoTerraform-nat-public1-ap-south-1a.id
+  }
 
   tags = {
     Name = "VPCDemoTerraform-rtb-private1-ap-south-1a"
   }
   
 }
+resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-private1-ap-south-1a" {
+  subnet_id      = aws_subnet.VPCDemoTerraform-subnet-private1-ap-south-1a.id
+  route_table_id = aws_route_table.VPCDemoTerraform-rtb-private1-ap-south-1a.id
+  
+}
 
+#Private Route Table for ap-south-1b
 resource "aws_route_table" "VPCDemoTerraform-rtb-private2-ap-south-1b" {
   vpc_id = aws_vpc.VPCDemoTerraform.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.VPCDemoTerraform-nat-public2-ap-south-1b.id
+  }
 
   tags = {
     Name = "VPCDemoTerraform-rtb-private2-ap-south-1b"
   }
+  
+}
+resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-private2-ap-south-1b" {
+  subnet_id      = aws_subnet.VPCDemoTerraform-subnet-private2-ap-south-1b.id
+  route_table_id = aws_route_table.VPCDemoTerraform-rtb-private2-ap-south-1b.id
   
 }
