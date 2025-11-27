@@ -22,43 +22,37 @@ resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-public2-ap-so
   route_table_id = aws_route_table.VPCDemoTerraform-rtb-public.id
   
 }
-
-#Private Route Table for ap-south-1a
-resource "aws_route_table" "VPCDemoTerraform-rtb-private1-ap-south-1a" {
+#Private Route Tables
+resource "aws_route_table" "VPCDemoTerraform-private-1a" {
   vpc_id = aws_vpc.VPCDemoTerraform.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.VPCDemoTerraform-nat-public1-ap-south-1a.id
+    nat_gateway_id = aws_nat_gateway.VPCDemoTerraform-nat.id
   }
 
   tags = {
-    Name = "VPCDemoTerraform-rtb-private1-ap-south-1a"
+    Name = "VPCDemoTerraform-rtb-private-1a"
   }
-  
 }
-resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-private1-ap-south-1a" {
+resource "aws_route_table_association" "VPCDemoTerraform-private-1a-assoc" {
   subnet_id      = aws_subnet.VPCDemoTerraform-subnet-private1-ap-south-1a.id
-  route_table_id = aws_route_table.VPCDemoTerraform-rtb-private1-ap-south-1a.id
-  
+  route_table_id = aws_route_table.VPCDemoTerraform-private-1a.id
 }
 
-#Private Route Table for ap-south-1b
-resource "aws_route_table" "VPCDemoTerraform-rtb-private2-ap-south-1b" {
+resource "aws_route_table" "VPCDemoTerraform-private-1b" {
   vpc_id = aws_vpc.VPCDemoTerraform.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.VPCDemoTerraform-nat-public2-ap-south-1b.id
+    nat_gateway_id = aws_nat_gateway.VPCDemoTerraform-nat.id
   }
 
   tags = {
-    Name = "VPCDemoTerraform-rtb-private2-ap-south-1b"
+    Name = "VPCDemoTerraform-rtb-private-1b"
   }
-  
 }
-resource "aws_route_table_association" "VPCDemoTerraform-rtb-assoc-private2-ap-south-1b" {
+resource "aws_route_table_association" "VPCDemoTerraform-private-1b-assoc" {
   subnet_id      = aws_subnet.VPCDemoTerraform-subnet-private2-ap-south-1b.id
-  route_table_id = aws_route_table.VPCDemoTerraform-rtb-private2-ap-south-1b.id
-  
+  route_table_id = aws_route_table.VPCDemoTerraform-private-1b.id
 }

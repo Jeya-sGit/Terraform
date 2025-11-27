@@ -1,4 +1,24 @@
 # 🌐 NETWORK ARCHITECTURE
+```
+aws-high-availability-infra/
+│
+├── provider.tf
+├── variables.tf
+├── terraform.tfvars
+├── outputs.tf
+├── securityGroup.tf
+│
+├── vpc/
+│   ├── vpc.tf
+│   ├── subnet.tf
+│   ├── igw.tf
+│   ├── nat.tf
+│   ├── routeTable.tf
+│
+└── README.md
+
+```
+
 
 ```
                Internet
