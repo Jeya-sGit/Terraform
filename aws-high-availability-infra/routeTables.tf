@@ -8,7 +8,7 @@ resource "aws_route_table" "VPCDemoTerraform-rtb-public" {
   }
 
   tags = {
-    Name = "VPCDemoTerraform-rtb-public"
+    Name = "VPCDemoTerraform_rtb_public"
   }
   
 }
@@ -32,7 +32,7 @@ resource "aws_route_table" "VPCDemoTerraform-private-1a" {
   }
 
   tags = {
-    Name = "VPCDemoTerraform-rtb-private-1a"
+    Name = "VPCDemoTerraform_rtb_private_1a"
   }
 }
 resource "aws_route_table_association" "VPCDemoTerraform-private-1a-assoc" {
@@ -49,7 +49,7 @@ resource "aws_route_table" "VPCDemoTerraform-private-1b" {
   }
 
   tags = {
-    Name = "VPCDemoTerraform-rtb-private-1b"
+    Name = "VPCDemoTerraform_rtb_private_1b"
   }
 }
 resource "aws_route_table_association" "VPCDemoTerraform-private-1b-assoc" {

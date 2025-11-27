@@ -1,9 +1,8 @@
 # Single EIP for NAT
 resource "aws_eip" "VPCDemoTerraform-nat-eip" {
-  vpc = true
-
+  domain = "vpc"  #Purpose: Allocate EIP in VPC.Equivalent to vpc=true used in older versions.
   tags = {
-    Name = "VPCDemoTerraform-eip-nat"
+    Name = "VPCDemoTerraform_eip_nat"
   }
 }
 
@@ -13,6 +12,6 @@ resource "aws_nat_gateway" "VPCDemoTerraform-nat" {
   subnet_id     = aws_subnet.VPCDemoTerraform-subnet-public1-ap-south-1a.id
 
   tags = {
-    Name = "VPCDemoTerraform-nat"
+    Name = "VPCDemoTerraform_nat"
   }
 }

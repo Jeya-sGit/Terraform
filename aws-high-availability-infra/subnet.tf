@@ -5,7 +5,7 @@ resource "aws_subnet" "VPCDemoTerraform-subnet-public1-ap-south-1a" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "VPCDemoTerraform-subnet-public1-ap-south-1a"
+    Name = "VPCDemoTerraform_subnet_public1_ap_south_1a"
   }
   
 }
@@ -17,7 +17,7 @@ resource "aws_subnet" "VPCDemoTerraform-subnet-public2-ap-south-1b" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "VPCDemoTerraform-subnet-public2-ap-south-1b"
+    Name = "VPCDemoTerraform_subnet_public2_ap_south_1b"
   }
   
 }
@@ -28,7 +28,7 @@ resource "aws_subnet" "VPCDemoTerraform-subnet-private1-ap-south-1a" {
   availability_zone = var.az_1
 
   tags = {
-    Name = "VPCDemoTerraform-subnet-private1-ap-south-1a"
+    Name = "VPCDemoTerraform_subnet_private1_ap_south_1a"
   }
   
 }
@@ -39,7 +39,7 @@ resource "aws_subnet" "VPCDemoTerraform-subnet-private2-ap-south-1b" {
   availability_zone = var.az_2
 
   tags = {
-    Name = "VPCDemoTerraform-subnet-private2-ap-south-1b"
+    Name = "VPCDemoTerraform_subnet_private2_ap_south_1b"
   }
   
 }
