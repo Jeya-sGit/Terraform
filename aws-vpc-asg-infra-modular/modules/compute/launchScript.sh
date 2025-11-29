@@ -1,6 +1,6 @@
 #!/bin/bash
 yum update -y
-yum install -y httpd
-Systemctl start httpd
-systemctl enable httpd
-echo "<h1>This message from yt webserver: $(hostname -1)</h1>> /var/www/html/index.html
+yum install httpd -y
+systemctl start httpd 
+systemctl enable httpd 
+echo "<h1>Hello from $(hostname -f) - Deployed via Terraform</h1>" > /var/www/html/index.html
