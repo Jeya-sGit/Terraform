@@ -18,6 +18,16 @@ output "private_subnet_cidrs" {
   value       = aws_subnet.Private_Subnet[*].cidr_block
 }
 
+output "public_subnet_ids" { 
+  description = "The IDs for all public subnets across AZs."
+  value       = aws_subnet.Public_Subnet[*].id
+}
+
+output "private_subnet_ids" {
+  description = "The IDs for all private subnets across AZs."
+  value       = aws_subnet.Private_Subnet[*].id
+}
+
 output "nat_gateway_public_ips" {
   description = "Public IP addresses allocated to the HA NAT Gateways."
   # Uses the EIP resource which holds the public IP
