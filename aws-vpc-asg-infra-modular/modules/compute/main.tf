@@ -1,7 +1,7 @@
 resource "aws_security_group" "ALB_SG" {
-    name = "ApplicationLoadBalancer-SG"
+    name = "${var.project_name}-ALB-SG"
     description = "Security Group for Application Load Balancer"
-    vpc_id = aws_vpc.Custom_VPC.id  
+    vpc_id = var.vpc_id  
     ingress {
         from_port   = 80
         to_port     = 80
@@ -21,14 +21,14 @@ resource "aws_security_group" "ALB_SG" {
 }  
 
 resource "aws_security_group" "EC2-SG" {
-    name = "EC2-Instance-SG"
+    name = "${var.project_name}-EC2-Instance-SG"
     description = "Security Group for EC2 Instances"
-    vpc_id = aws_vpc.Custom_VPC.id  
+    vpc_id = var.vpc_id  
     ingress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = [aws_security_group.ALB_SG.id]
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        security_groups= [aws_security_group.ALB_SG.id]
    }
    egress {
         from_port   = 0
@@ -43,13 +43,12 @@ resource "aws_security_group" "EC2-SG" {
 }
 
 resource "aws_alb" "App_LB" {
-    name               = "Application-Load-Balancer"
+    name               = "${var.project_name}-AppLoadBalancer"
     internal           = false
     load_balancer_type = "application"
     security_groups    = [aws_security_group.ALB_SG.id]
-    subnets            = aws_subnet.Public_Subnet[*].id
-    depends_on         = [aws_internet_gateway.IGW_Custom_VPC]
-
+    subnets            = var.public_subnet_ids
+    
     tags = {
         Name = "terraform-created-ALB"
     }
@@ -57,10 +56,10 @@ resource "aws_alb" "App_LB" {
 }
 
 resource "aws_lb_target_group" "App_LB-EC2-TG" {
-    name = "App-LB-EC2-Target-Group"
+    name = "${var.project_name}-AppLB-EC2-TG"
     port = 80
     protocol = "HTTP"  
-    vpc_id = aws_vpc.Custom_VPC.id
+    vpc_id = var.vpc_id
     tags = {
         Name = "terraform-created-ALB-EC2-TG"
     } 
@@ -82,16 +81,16 @@ resource "aws_lb_listener" "ALB-Listener" {
 }
 
 resource "aws_launch_template" "EC2_Launch_Template"{
-    name = "Python-WebServer"
-    image_id = "ami-0d176f79571d18a8f"
-    instance_type = "t2.micro"
+    name = "${var.project_name}-WebServer"
+    image_id = var.ami_id
+    instance_type = var.instance_type
 
     network_interfaces {
       associate_public_ip_address = false
       security_groups = [ aws_security_group.EC2-SG.id ]
     }
 
-    user_data = filebase64("lauchScript.sh")
+    user_data = filebase64("${path.module}/launchScript.sh")
 
     tag_specifications {
       resource_type = "instance"
@@ -102,16 +101,14 @@ resource "aws_launch_template" "EC2_Launch_Template"{
 }
 
 resource "aws_autoscaling_group" "ASG-EC2" {
-    desired_capacity     = 2
-    max_size             = 3
-    min_size             = 2
-    vpc_zone_identifier  = aws_subnet.Private_Subnet[*].id
+    desired_capacity     = var.asg_desired_capacity
+    max_size             = var.asg_max_size
+    min_size             = var.asg_min_size
+    vpc_zone_identifier  = var.private_subnet_ids
     target_group_arns = [aws_lb_target_group.App_LB-EC2-TG.arn]
     launch_template {
         id      = aws_launch_template.EC2_Launch_Template.id
         version = "$Latest"
     }
-    health_check_type = "EC2"
-    
-  
+    health_check_type = "ELB"
 }
