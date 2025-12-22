@@ -84,6 +84,7 @@ resource "aws_launch_template" "EC2_Launch_Template"{
     name = "${var.project_name}-WebServer"
     image_id = var.ami_id
     instance_type = var.instance_type
+    key_name = var.ssh_key_name
 
     network_interfaces {
       associate_public_ip_address = false
