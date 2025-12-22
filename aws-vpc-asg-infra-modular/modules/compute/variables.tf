@@ -48,3 +48,8 @@ variable "asg_desired_capacity" {
   type        = number
   default     = 2
 }
+
+variable "key_name" {
+  description = "The SSH key name to associate with the EC2 instances"
+  type        = string
+}
