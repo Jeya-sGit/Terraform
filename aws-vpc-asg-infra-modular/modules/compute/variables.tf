@@ -49,7 +49,12 @@ variable "asg_desired_capacity" {
   default     = 2
 }
 
-variable "key_name" {
+variable "ssh_key_name" {
   description = "The SSH key name to associate with the EC2 instances"
+  type        = string
+}
+
+variable "bastion_sg_id" {
+  description = "The ID of the Bastion Security Group"
   type        = string
 }
